@@ -1,3 +1,5 @@
+Restoran Projesi
+
 🍽️ Restoran Web Projesi
 Bu proje, AkademiQ Ai bünyesinde geliştirilen, modern ve dinamik bir restoran yönetim platformudur. Ziyaretçilere interaktif bir menü, etkileyici bir marka hikayesi ve bülten aboneliği sunan kullanıcı dostu bir arayüz ile yöneticilerin tüm platform içeriğini gerçek zamanlı olarak kontrol edebildiği dinamik bir yönetim panelinden oluşmaktadır.
 🛠️ Kullanılan Teknolojiler
