@@ -1,0 +1,186 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+@await Component.InvokeAsync("_DefaultHeadComponentPartial")
+
+<body id="home">
+    <div class="body">
+        <!-- HEADER -->
+        @await Component.InvokeAsync("_DefaultNavbarComponentPartial")
+
+
+        <!-- Home -->
+        @await Component.InvokeAsync("_DefaultFeatureComponentPartial")
+
+
+
+        @* --------------------------------------------- *@
+
+        <!-- Stats -->
+        @await Component.InvokeAsync("_DefaultStatisticComponentPartial")
+@*         BU KISMI SEN YAP
+ *@
+        <!-- About Us -->
+        <div id="about" class="container">
+            <!-- About Section 1 -->
+            @await Component.InvokeAsync("_DefaultAboutSection1ComponentPartial")
+
+            <!-- About Section 2 -->
+            @await Component.InvokeAsync("_DefaultAboutSection2ComponentPartial")
+        </div>
+        <div class="space80"></div>
+
+
+        @await Component.InvokeAsync("_DefaultStoryVideoComponentPartial")
+        @* --------------------------------------------- *@
+
+        @await Component.InvokeAsync("_DefaultProductComponentPartial")
+        <div class="space100"></div>
+
+        <!-- Testimonials -->
+        @await Component.InvokeAsync("_DefaultTestimonialComponentPartial")
+
+        <!-- Faq -->
+        @await Component.InvokeAsync("_DefaultSSSComponentPartial")
+
+   
+
+        <!-- PARALLAX -->
+        <section class="text-center">
+            <div class="cta-wrap subscribe-elt2 ">
+                <div class="container">
+                    <div class="col-md-12">
+                        <h1>Sitemize abone olun, fırsatlardan yararlanın</h1>
+                        <p>Abone olmanız için kredi kartına gerek yok, sadece mail adresinizi yazın.</p>
+
+                        <form class="intro-newsletter" action="/Default/Subscribe" method="POST">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <!-- 'name' özelliği Controller'daki parametre ismiyle aynı olmalı -->
+                                    <input name="email" type="email" required placeholder="Email adresinizi girin">
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-primary btn-block" type="submit">Abone Ol</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="space80"></div>
+
+        <!-- FOOTER -->
+        <footer class="footer2" id="footer2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 footerP text-center">
+                        <a href="#">Kayıt Ol</a>
+                        <a href="#">Forum</a>
+                        <a href="#">Ortak</a>
+                        <a href="#">S.S.S</a>
+                    </div>
+                    <div class="footer-social space30 text-center">
+                        <a href="#" class="fa fa-facebook"></a>
+                        <a href="#" class="fa fa-twitter"></a>
+                        <a href="#" class="fa fa-youtube"></a>
+                        <a href="#" class="fa fa-dribbble"></a>
+                        <a href="#" class="fa fa-linkedin"></a>
+                        <a href="#" class="fa fa-instagram"></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Copyright -->
+        <div class="footer-copy">
+            <div class="container">
+                &copy; 2019. Foodera. All rights reserved.
+            </div>
+        </div>
+
+
+
+        <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" data-toggle="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="cf2-wrap">
+
+                            <h2>Make Your Order Now!</h2>
+
+                            <div class="clearfix space40"></div>
+                            <form class="positioned" name="sentMessage" id="contactForm" action="php/contact.php" method="post">
+                                <div class="row">
+
+                                    <div class="col-md-6 col-sm-6">
+                                        <input name="senderName" id="senderName" placeholder="Your Name" required type="text">
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <input name="senderEmail" id="senderEmail" placeholder="Email Address" required type="email">
+                                    </div>
+                                </div>
+
+                                <input name="address" id="address" placeholder="Address" required type="text">
+
+                                <input placeholder="Zip Code" required type="number">
+
+                                <input placeholder="Mobile No." required type="number">
+
+
+                                <select name="name" id="select" required="required">
+                                    <option value=""> Rainbow Vegetable Sandwich - $10.50 </option>
+                                    <option value="1"> Vegetarian Burger - $9.20 </option>
+                                    <option value="2"> Raspberry Stuffed French Toast - $12.50 </option>
+
+                                </select>
+
+
+
+                                <button type="submit" class="btn btn-primary btn-ico">Send Message<i class="fa fa-paper-plane-o"></i></button>
+                            </form>
+                            <div id="sendingMessage" class="statusMessage">
+                                <p><i class="fa fa-spin fa-cog"></i> Sending your message. Please wait...</p>
+                            </div>
+                            <div id="successMessage" class="successmessage">
+                                <p><span class="success-ico"></span> Thanks for sending your message! We'll get back to you shortly.</p>
+                            </div>
+                            <div id="failureMessage" class="errormessage">
+                                <p><span class="error-ico"></span> There was a problem sending your message. Please try again.</p>
+                            </div>
+                            <div id="incompleteMessage" class="statusMessage">
+                                <p><i class="fa fa-warning"></i> Please complete all the fields in the form before sending.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT =============================-->
+
+    <script src="/template/js/jquery.js"></script>
+    <script src="/template/js/bootstrap.min.js"></script>
+    <script src="/template/js/vendors/slick/slick.min.js"></script>
+    <script src="/template/js/vendors/jquery.easing.min.js"></script>
+    <script src="/template/js/vendors/stellar.js"></script>
+    <script src="/template/js/vendors/isotope/isotope.pkgd.js"></script>
+    <script src="/template/js/main.js"></script>
+    <script src="/template/js/vendors/mc/jquery.ketchup.all.min.js"></script>
+    <script src="/template/js/vendors/mc/main.js"></script>
+    @await Component.InvokeAsync("_DefaultOrderModalComponentPartial")
+
+</body>
+
+</html>

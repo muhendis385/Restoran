@@ -1,0 +1,108 @@
+﻿@model AkademiQMongoDb.Dtos.FeatureDto.ResultFeatureDto
+
+<style>
+    /* Temanın intro3 sınıfını "DARK & ELEGANT" hale getiriyoruz */
+    .intro.intro3 {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 100vh; /* Ekranı tam kaplasın */
+        background-image: url('@Model.ImageUrl') !important; /* Veritabanından gelen görsel */
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+        background-attachment: fixed; /* Parallaks efekti */
+        padding: 0;
+        border-bottom: none; /* Çizgiyi sildik, dark temada gerek yok */
+    }
+
+        /* Görselin Üzerindeki SİYAH/KARANLIK (Overlay) Katmanı */
+        .intro.intro3::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Siyah renk, %65 şeffaflık (Modern ve Şık Karartma) */
+            background-color: rgba(0, 0, 0, 0.65);
+            z-index: 1;
+        }
+
+        /* İçerik Konteyneri (Yazıların Katmanın Üzerine Çıkması İçin) */
+        .intro.intro3 .container {
+            position: relative;
+            z-index: 2; /* Siyah katmanın üzerinde görünmesi için */
+        }
+
+        /* YAZI STİLLERİ (Premium Beyaz) */
+        .intro.intro3 h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 4rem; /* Biraz daha büyüttük, daha vurucu */
+            font-weight: 800;
+            color: #ffffff; /* Saf Beyaz Başlık */
+            text-transform: uppercase;
+            letter-spacing: 2px; /* Harf arası boşluk, kurumsal hava katar */
+            margin-bottom: 20px;
+            /* Hafif gölge, yazıya derinlik katar (Optional) */
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .intro.intro3 p {
+            font-size: 1.3rem; /* Biraz daha net okunması için büyüttük */
+            color: rgba(255, 255, 255, 0.85); /* Hafif şeffaf beyaz (Göz yormaz) */
+            max-width: 600px; /* Biraz genişlettik */
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        /* BUTON STİLLERİ (Dark Tema ile Uyumlu) */
+        .intro.intro3 .btn-lg.btn-primary.page-scroll {
+            padding: 15px 40px; /* Daha dolgun bir buton */
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px; /* Tam yuvarlak buton (Modern) */
+            color: #fff;
+            background-color: #ff4747; /* Temanızın ana rengi (Örn: Kırmızı) */
+            border: 2px solid #ff4747;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease; /* Hover efekti için geçiş */
+            box-shadow: 0 5px 20px rgba(255, 71, 71, 0.3); /* Hafif renkli gölge */
+        }
+
+            /* Buton Hover Efekti (Şıklık Katmak İçin) */
+            .intro.intro3 .btn-lg.btn-primary.page-scroll:hover {
+                background-color: transparent; /* İçi boşalsın */
+                color: #ff4747; /* Yazı rengi değişsin */
+                box-shadow: 0 8px 25px rgba(255, 71, 71, 0.5); /* Gölge artsın */
+                transform: translateY(-3px); /* Hafif yukarı zıplama */
+            }
+
+</style>
+
+<div class="intro intro3">
+    <div class="container">
+        <div class="row center-content align-items-center">
+            <div class="col-md-8 col-sm-12 col-xs-12 text-center text-md-left">
+                @* Mobilde ortala, PC'de sola yasla *@
+                <h3>@Model.Title</h3>
+
+                <p>@Model.Description</p>
+
+                <div class="space20"></div>
+
+                <div class="dual-btn">
+                    <a href="#explore" class="btn btn-lg btn-primary page-scroll shadow">
+                        Hemen Sipariş Ver <span class="fa fa-shopping-basket ml-2"></span>
+                    </a>
+                </div>
+            </div>
+
+            @* Sağ taraf boş kalsın (Yazıları sola yaslamak için) *@
+            <div class="col-md-4 hidden-sm hidden-xs">
+            </div>
+        </div>
+    </div>
+</div>

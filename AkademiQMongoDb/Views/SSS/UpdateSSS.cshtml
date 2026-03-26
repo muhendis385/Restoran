@@ -1,0 +1,77 @@
+﻿@model AkademiQMongoDb.Dtos.SSSDto.GetSSSByIdDto
+@{
+    ViewData["Title"] = "SSS Güncelle";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<style>
+    /* Önceki CSS yapına uygun eklemeler */
+    .card-title {
+        font-weight: 700;
+        color: #343a40;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+        border-radius: 6px;
+        border: 1px solid #ebedf2;
+        font-size: 0.9rem;
+    }
+
+        .form-control:focus {
+            border-color: #71b6f9;
+            box-shadow: 0 0 0 0.2rem rgba(113, 182, 249, 0.1);
+        }
+
+    .btn-update {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color: #000;
+        font-weight: 600;
+        padding: 10px 25px;
+    }
+
+        .btn-update:hover {
+            background-color: #e0a800;
+            color: #000;
+        }
+</style>
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="card-title mb-0">SSS Güncelleme Paneli</h4>
+                <a href="/SSS/SSSList" class="btn btn-light btn-sm">
+                    <i class="mdi mdi-arrow-left mr-1"></i> Listeye Dön
+                </a>
+            </div>
+
+            <form class="forms-sample" method="post" action="/SSS/UpdateSSS">
+                @* ÖNEMLİ: MongoDB ID bilgisini hidden olarak tutuyoruz *@
+                <input type="hidden" asp-for="SSSId" />
+
+                <div class="form-group mb-3">
+                    <label for="Title">Soru Başlığı</label>
+                    <input type="text" asp-for="Title" class="form-control" placeholder="Soruyu giriniz..." required>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="Description">Cevap İçeriği</label>
+                    <textarea asp-for="Description" class="form-control" rows="8" placeholder="Cevabı detaylıca yazınız..." required></textarea>
+                </div>
+
+                <div class="text-right">
+                    <button type="submit" class="btn btn-update shadow-sm">
+                        <i class="mdi mdi-content-save mr-1"></i> Değişiklikleri Kaydet
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

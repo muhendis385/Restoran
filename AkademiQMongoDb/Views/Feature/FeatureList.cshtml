@@ -1,0 +1,201 @@
+﻿@model AkademiQMongoDb.Dtos.FeatureDto.ResultFeatureDto
+@{
+    ViewData["Title"] = "Öne Çıkan Yönetimi";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<style>
+    /* Önizleme Kartı (Hero Preview) */
+    .preview-container {
+        position: relative;
+        width: 100%;
+        min-height: 350px;
+        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('@Model?.ImageUrl');
+        background-size: cover;
+        background-position: center;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 40px;
+        color: white;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        border: 4px solid #fff;
+    }
+
+    .preview-badge {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: #ff4747;
+        color: white;
+        padding: 5px 15px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .preview-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    }
+
+    /* Uzun açıklamayı sınırlayan CSS */
+    .preview-desc {
+        font-size: 1.1rem;
+        max-width: 600px;
+        opacity: 0.9;
+        margin-bottom: 25px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* Maksimum 3 satır gösterir */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Detay Tablosu */
+    .info-table {
+        background: #f8f9fa;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+        .info-table td {
+            padding: 15px !important;
+            vertical-align: middle !important;
+        }
+
+    .label-text {
+        font-weight: 700;
+        color: #4B49AC;
+        width: 120px;
+    }
+
+    .action-group {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+    }
+
+    .btn-modern {
+        border-radius: 10px;
+        padding: 12px 25px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+</style>
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="card shadow-sm border-0" style="border-radius: 20px;">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="card-title mb-0">Ana Sayfada Öne Çıkan Yönetimi</h4>
+                    <span class="text-muted small">Web sitenizin giriş ekranı ayarları</span>
+                </div>
+
+                @if (Model == null || string.IsNullOrEmpty(Model.FeatureId))
+                {
+                    <div class="text-center py-5" style="border: 2px dashed #ccc; border-radius: 15px;">
+                        <i class="mdi mdi-image-filter-hdr text-muted" style="font-size: 4rem;"></i>
+                        <h4 class="mt-3">Henüz Bir İçerik Yok</h4>
+                        <a href="/Feature/CreateFeature" class="btn btn-primary btn-lg mt-2 shadow-sm">
+                            <i class="mdi mdi-plus"></i> Hemen Oluştur
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        <!-- Sol Kolon: Canlı Önizleme -->
+                        <div class="col-lg-7">
+                            <div class="preview-container">
+                                <span class="preview-badge">Canlı Görünüm</span>
+                                <h1 class="preview-title">@Model.Title</h1>
+
+                                <p class="preview-desc">
+                                    @{
+                                        var desc = Model.Description ?? "";
+                                        if (desc.Length > 40) { desc = desc.Substring(0, 40) + "..."; }
+                                    }
+                                    @desc
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sağ Kolon: Detaylar -->
+                        <div class="col-lg-5">
+                            <div class="table-responsive info-table">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td class="label-text">Başlık</td>
+                                            <td class="text-dark font-weight-bold">@Model.Title</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label-text">Açıklama</td>
+                                            <td class="text-muted small">
+                                                @desc @* Kısaltılmış versiyonu burada da kullanıyoruz *@
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label-text">Görsel</td>
+                                            <td>
+                                                <a href="@Model.ImageUrl" target="_blank" class="badge badge-outline-info">
+                                                    <i class="mdi mdi-link-variant"></i> URL'yi Gör
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="pt-4">
+                                                <div class="action-group">
+                                                    <a href="/Feature/UpdateFeature/@Model.FeatureId" class="btn btn-warning btn-modern text-white">
+                                                        <i class="mdi mdi-pencil"></i> Düzenle
+                                                    </a>
+                                                    <button onclick="deleteConfirm('@Model.FeatureId')" class="btn btn-danger btn-modern">
+                                                        <i class="mdi mdi-delete"></i> Sil
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="alert alert-light mt-3 border" style="border-radius:10px;">
+                                <i class="mdi mdi-lightbulb-on text-warning mr-2"></i>
+                                <small class="text-muted">Açıklama metni otomatik olarak 40 karakterle sınırlandırılmıştır.</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function deleteConfirm(id) {
+        Swal.fire({
+            title: 'Silmek istediğinize emin misiniz?',
+            text: "Bu işlem geri alınamaz!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6e7d88',
+            confirmButtonText: 'Evet, Sil',
+            cancelButtonText: 'Vazgeç',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/Feature/DeleteFeature/" + id;
+            }
+        })
+    }
+</script>

@@ -1,0 +1,167 @@
+﻿@model List<AkademiQMongoDb.Dtos.ProductDto.ResultProductDto>
+
+<style >
+    /* Google Fonts entegrasyonu */
+    @@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&display=swap');
+
+    #explore {
+        background-color: #fafafa;
+    }
+
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+    }
+
+    .card-product {
+        border: none;
+        border-radius: 20px;
+        overflow: hidden;
+        background: #fff;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        position: relative;
+    }
+
+        .card-product:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+        }
+
+    /* Resim Alanı */
+    .img-wrap {
+        position: relative;
+        height: 240px;
+        overflow: hidden;
+    }
+
+        .img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+    .card-product:hover .img-wrap img {
+        transform: scale(1.1);
+    }
+
+    /* Hazırlanma Süresi Badge */
+    .time-badge {
+        position: absolute;
+        bottom: 15px;
+        left: 15px;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(5px);
+        color: #333;
+        padding: 5px 12px;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* İçerik Alanı */
+    .info-wrap {
+        padding: 25px 20px;
+    }
+
+    .product-name {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 1.25rem;
+        color: #1a1a1a;
+        margin-bottom: 10px;
+    }
+
+    .price-new {
+        color: #e67e22; /* Daha soft bir turuncu/kahve tonu */
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+
+    .price-old {
+        font-size: 1rem;
+        color: #b2bec3;
+        margin-left: 10px;
+        text-decoration: line-through;
+    }
+
+    /* Sipariş Butonu */
+    .btn-order {
+        background: #1a1a1a;
+        color: #fff;
+        border: none;
+        padding: 12px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 0.3s;
+    }
+
+        .btn-order:hover {
+            background: #e67e22;
+            color: #fff;
+            transform: scale(1.02);
+        }
+</style>
+
+
+<div id="explore" class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="text-uppercase text-muted small font-weight-bold" style="letter-spacing: 2px;">Lezzet Keşfi</span>
+            <h2 class="section-title display-4">Şefin Seçtikleri</h2>
+            <div class="mx-auto bg-warning mb-3" style="height: 3px; width: 60px;"></div>
+            <p class="text-muted mx-auto" style="max-width: 600px;">
+                Gastronomi yolculuğumuzda en taze malzemeleri sizin için bir araya getirdik.
+            </p>
+        </div>
+
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-4 d-flex">
+                    <div class="card card-product shadow-sm w-100">
+                        <!-- Görsel Bölümü -->
+                        <div class="img-wrap">
+                            <img src="@item.ImageUrl" alt="@item.ProductName">
+                            <div class="time-badge">
+                                <i class="mdi mdi-clock-outline mr-1 text-warning"></i> @item.TotalTime Dakika
+                            </div>
+                        </div>
+
+                        <!-- Bilgi Bölümü -->
+                        <div class="info-wrap text-center flex-grow-1">
+                            <h4 class="product-name">@item.ProductName</h4>
+                            <div class="price-wrap">
+                                <span class="price-new">@item.Price.ToString("C2")</span>
+                                @if (item.OldPrice > 0)
+                                {
+                                    <span class="price-old">@item.OldPrice.ToString("C2")</span>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Buton Bölümü -->
+                        <div class="px-4 pb-4">
+                            <!-- Sipariş Ver Butonu Revize -->
+                            <!-- Product ViewComponent içindeki buton kısmını şu hale getir: -->
+                            <button class="btn btn-order btn-block rounded-pill shadow-sm order-btn"
+                                    type="button"
+                                    data-toggle="modal"
+                                    data-target="#modalOrder"
+                                    data-productname="@item.ProductName"
+                                    data-price="@item.Price.ToString().Replace(",", ".")">
+                                <i class="mdi mdi-silverware-variant mr-2"></i> Sipariş Ver
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+  
+</div>
+

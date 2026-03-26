@@ -1,0 +1,50 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+@await Component.InvokeAsync("_AdminHeadComponentPartial")
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row" style="background: transparent; box-shadow: none; border: none;">
+            <div class="navbar-brand-wrapper d-flex justify-content-center">
+                <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
+                    <a class="navbar-brand brand-logo" href="/Dashboard/Index"><img src="~/admintemplate/images/logo.svg" alt="logo" /></a>
+                    <a class="navbar-brand brand-logo-mini" href="/Dashboard/Index"><img src="~/admintemplate/images/logo-mini.svg" alt="logo" /></a>
+                    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                        <span class="typcn typcn-th-menu"></span>
+                    </button>
+                </div>
+            </div>
+            @* Sağ taraf tamamen kaldırıldı *@
+        </nav>
+        <!-- partial -->
+
+        <div class="container-fluid page-body-wrapper">
+            @await Component.InvokeAsync("_AdminSideBarComponentPartial")
+
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    @RenderBody()
+                </div>
+                <!-- content-wrapper ends -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+
+    <!-- base:js -->
+    <script src="/admintemplate/vendors/js/vendor.bundle.base.js"></script>
+    <script src="/admintemplate/vendors/chart.js/Chart.min.js"></script>
+    <script src="/admintemplate/js/off-canvas.js"></script>
+    <script src="/admintemplate/js/hoverable-collapse.js"></script>
+    <script src="/admintemplate/js/template.js"></script>
+    <script src="/admintemplate/js/settings.js"></script>
+    <script src="/admintemplate/js/todolist.js"></script>
+    <script src="/admintemplate/js/dashboard.js"></script>
+</body>
+</html>

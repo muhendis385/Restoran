@@ -1,0 +1,39 @@
+﻿@model AkademiQMongoDb.Dtos.AboutSection2.GetAbout2ByIdDto
+@{
+    ViewData["Title"] = "İçerik Güncelle";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <h4 class="card-title text-warning">İçeriği Düzenle</h4>
+            <form class="forms-sample" method="post">
+                <input type="hidden" asp-for="AboutSection2Id" />
+
+                <div class="form-group">
+                    <label>Başlık</label>
+                    <input type="text" asp-for="Title" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Açıklama</label>
+                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Görsel URL</label>
+                    <input type="text" asp-for="ImageUrl" class="form-control">
+                </div>
+
+                <div class="p-3 mb-3 bg-light rounded">
+                    <p class="font-weight-bold">Özellik Maddeleri</p>
+                    <div class="form-group"><label>1. Madde</label><input type="text" asp-for="Item1" class="form-control"></div>
+                    <div class="form-group"><label>2. Madde</label><input type="text" asp-for="Item2" class="form-control"></div>
+                    <div class="form-group"><label>3. Madde</label><input type="text" asp-for="Item3" class="form-control"></div>
+                </div>
+
+                <button type="submit" class="btn btn-warning">Değişiklikleri Uygula</button>
+                <a href="/About2/Index" class="btn btn-light">Vazgeç</a>
+            </form>
+        </div>
+    </div>
+</div>

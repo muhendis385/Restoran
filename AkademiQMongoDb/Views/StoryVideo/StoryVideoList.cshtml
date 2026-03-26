@@ -1,0 +1,170 @@
+﻿@model AkademiQMongoDb.Dtos.StoryVideoDto.ResultVideoDto
+@{
+    ViewData["Title"] = "Hakkımızda Yönetimi";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<style>
+    /* Başlık: Tek satır, taşarsa üç nokta */
+    .title-truncate {
+        display: inline-block;
+        max-width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: 600;
+        vertical-align: middle;
+    }
+
+    /* Açıklama: 2 satır, taşarsa üç nokta (Line Clamp) */
+    .desc-truncate {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        max-width: 300px;
+        line-height: 1.5;
+        font-size: 0.85rem;
+        color: #6c757d;
+    }
+
+    /* Hücrelerin dikey hizalanması */
+    .table td {
+        vertical-align: middle !important;
+    }
+
+    /* Görsel tasarımı */
+    .img-about {
+        width: 80px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid #eee;
+    }
+
+    /* Buton metinleri için küçük ayar */
+    .btn-text-icon i {
+        margin-right: 5px;
+        font-size: 14px;
+
+        .title-truncate {
+            display: inline-block;
+            max-width: 150px; /* Genişliği biraz daralttık yer açmak için */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 600;
+            vertical-align: middle;
+        }
+
+        .desc-truncate {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            max-width: 250px; /* Yer açmak için güncellendi */
+            line-height: 1.5;
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        /* Video Linki için özel stil */
+        .video-link-truncate {
+            display: inline-block;
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+
+        .table td {
+            vertical-align: middle !important;
+        }
+
+        .img-about {
+            width: 80px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid #eee;
+        }
+
+        .btn-text-icon i {
+            margin-right: 5px;
+            font-size: 14px;
+        }
+    }
+</style>
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Tanıtım Videosu</h4>
+
+            @if (Model == null || string.IsNullOrEmpty(Model.StoryVideoId))
+            {
+                <div class="alert alert-warning border-0 shadow-sm">
+                    <i class="mdi mdi-alert-circle-outline mr-2"></i> Henüz bir içerik tanımlanmamış.
+                    <br />
+                    <a href="/StoryVideo/CreateStoryVideo" class="btn btn-primary btn-sm mt-2">Yeni İçerik Oluştur</a>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="bg-light text-muted">
+                            <tr>
+                                <th style="width: 15%;">Başlık</th>
+                                <th style="width: 30%;">Açıklama</th>
+                                <th style="width: 15%;" class="text-center">Görsel</th>
+                                <th style="width: 20%;" class="text-center">Video Linki</th>
+                                <th style="width: 20%;" class="text-center">İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="title-truncate text-dark" title="@Model.Title">
+                                        @Model.Title
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="desc-truncate" title="@Model.Description">
+                                        @Model.Description
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <img src="@Model.ImageUrl" class="img-about shadow-sm" alt="Story Video Image" />
+                                </td>
+                                <td class="text-center">
+                                    @if (!string.IsNullOrEmpty(Model.VideoUrl))
+                                    {
+                                        <a href="@Model.VideoUrl" target="_blank" class="text-danger video-link-truncate" title="@Model.VideoUrl">
+                                            <i class="mdi mdi-play-circle mr-1"></i> @Model.VideoUrl
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small italic">Link Yok</span>
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    <div class="btn-group" role="group">
+                                        <a href="/StoryVideo/UpdateStoryVideo/@Model.StoryVideoId" class="btn btn-inverse-warning btn-sm btn-text-icon">
+                                            <i class="mdi mdi-pencil"></i> Güncelle
+                                        </a>
+                                        <button type="button" onclick="deleteConfirm('@Model.StoryVideoId')" class="btn btn-inverse-danger btn-sm btn-text-icon ml-1">
+                                            <i class="mdi mdi-delete"></i> Sil
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,154 @@
+﻿<style>
+    /* Modal Genel Şıklık */
+    #modalOrder .modal-content {
+        border-radius: 25px;
+        overflow: hidden;
+        background: #ffffff;
+    }
+
+    /* Üst Bilgi Kartı (Verilerin Görüneceği Yer) */
+    .order-header-card {
+        background: linear-gradient(135deg, #fffcf0 0%, #fff4d1 100%);
+        border: 2px dashed #f1c40f;
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 20px;
+        transition: all 0.3s;
+    }
+
+    #displayProductName {
+        color: #2d3436;
+        font-size: 1.6rem;
+        letter-spacing: -0.5px;
+    }
+
+    #displayProductPrice {
+        display: inline-block;
+        background: #27ae60;
+        color: white;
+        padding: 6px 18px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 10px rgba(39, 174, 96, 0.2);
+    }
+
+    /* Form Girişleri */
+    .modal-body label {
+        color: #636e72;
+        margin-left: 5px;
+    }
+
+    .form-control-modern {
+        border: 2px solid #f1f2f6 !important;
+        padding: 12px 20px !important;
+        height: auto !important;
+        border-radius: 12px !important;
+        transition: 0.3s !important;
+    }
+
+        .form-control-modern:focus {
+            border-color: #f1c40f !important;
+            background-color: #fff !important;
+            box-shadow: 0 5px 15px rgba(241, 196, 15, 0.1) !important;
+        }
+
+    .btn-confirm-order {
+        background: #f1c40f;
+        color: #2d3436;
+        border: none;
+        padding: 15px;
+        font-size: 1.1rem;
+        border-radius: 15px;
+        transition: 0.3s;
+    }
+
+        .btn-confirm-order:hover {
+            background: #f39c12;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(241, 196, 15, 0.3);
+        }
+</style>
+
+<div class="modal fade" id="modalOrder" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content shadow-2xl">
+            <!-- Modal Header -->
+            <div class="modal-header border-0 bg-light p-4">
+                <h5 class="modal-title font-weight-bold text-dark">
+                    <i class="mdi mdi-shopping-music mr-2 text-warning"></i>Sipariş Detayları
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="/Order/CreateOrder" method="post" id="orderForm">
+                <div class="modal-body p-4">
+
+                    <!-- VERİLERİN GÖRÜNECEĞİ ÖZET KARTI -->
+                    <div class="order-header-card text-center">
+                        <small class="text-uppercase font-weight-bold text-muted mb-2 d-block">Seçilen Lezzet</small>
+                        <h4 id="displayProductName" class="font-weight-bold mb-2"></h4>
+                        <span id="displayProductPrice" class="badge"></span>
+                    </div>
+
+                    <!-- Hidden Inputs (Controller'a Giden Kısım) -->
+                    <input type="hidden" name="ProductName" id="hiddenProductName" />
+                    <input type="hidden" name="Price" id="hiddenProductPrice" />
+
+                    <!-- Müşteri Bilgileri -->
+                    <div class="form-group mb-3">
+                        <label class="small font-weight-bold">Adınız Soyadınız</label>
+                        <input type="text" name="CustomerName" class="form-control form-control-modern" placeholder="Adınızı giriniz..." required />
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="small font-weight-bold">E-Posta Adresiniz</label>
+                        <input type="email" name="CustomerEmail" class="form-control form-control-modern" placeholder="eposta@adresiniz.com" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="small font-weight-bold">Teslimat Adresi</label>
+                        <textarea name="Address" class="form-control form-control-modern" rows="3" placeholder="Siparişinizin ulaştırılacağı adres..." required></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0 p-4">
+                    <button type="submit" class="btn btn-confirm-order font-weight-bold w-100">
+                        <i class="mdi mdi-check-circle-outline mr-2"></i>Siparişi Onayla
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    var bindOrderButtons = function () {
+        // .order-btn tıklandığında verileri hem hidden inputlara hem de ekrana basar
+        $('.order-btn').off('click').on('click', function () {
+            // Hem data hem attr ile çekerek garantiye alıyoruz
+            var pName = $(this).attr('data-productname') || $(this).data('productname');
+            var pPrice = $(this).attr('data-price') || $(this).data('price');
+
+            console.log("Seçilen:", pName, pPrice); // Test için konsola bakabilirsin
+
+            // Formun arka planına (hidden) verileri göm
+            $('#hiddenProductName').val(pName);
+            $('#hiddenProductPrice').val(pPrice);
+
+            // Modalda kullanıcının göreceği yazıları güncelle
+            $('#displayProductName').text(pName);
+            $('#displayProductPrice').text(pPrice + " TL");
+        });
+    };
+
+    // Sayfa yüklendiğinde ve dinamik içerik gelirse diye 1. saniyede çalıştır
+    $(document).ready(function() {
+        bindOrderButtons();
+    });
+
+    // Güvenlik amaçlı (AJAX yüklemeleri için)
+    setTimeout(bindOrderButtons, 1500);
+</script>

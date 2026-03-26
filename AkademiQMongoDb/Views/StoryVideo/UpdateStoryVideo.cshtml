@@ -1,0 +1,88 @@
+﻿@model AkademiQMongoDb.Dtos.StoryVideoDto.GetVideoByIdDto
+@{
+    ViewData["Title"] = "Tanıtım Videosu Güncelle";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <h4 class="card-title text-warning mb-4">
+                <i class="mdi mdi-play-circle-outline mr-2"></i> Tanıtım Videosu Düzenle
+            </h4>
+
+            <form class="forms-sample" method="post">
+                @* ID alanını gizli olarak gönderiyoruz *@
+                <input type="hidden" asp-for="StoryVideoId" />
+
+                <div class="form-group">
+                    <label class="font-weight-bold">Video Başlığı</label>
+                    <input type="text" asp-for="Title" class="form-control" placeholder="Başlık giriniz..." required>
+                </div>
+
+                <div class="form-group">
+                    <label class="font-weight-bold">Video Alt Açıklaması</label>
+                    <textarea asp-for="Description" class="form-control" rows="4" placeholder="Kısa bir açıklama yazınız..."></textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="font-weight-bold">Arka Plan Görsel URL</label>
+                            <input type="text" asp-for="ImageUrl" class="form-control" id="imageUrlInput" placeholder="https://...">
+                            <small class="text-muted italic">Resim URL'sini yapıştırdığınızda önizleme güncellenir.</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="font-weight-bold">Video Linki (YouTube / Vimeo)</label>
+                            <div class="input-group">
+                                <input type="text" asp-for="VideoUrl" class="form-control" placeholder="https://youtube.com/...">
+                                <div class="input-group-append">
+                                    <span class="input-group-text bg-danger text-white">
+                                        <i class="mdi mdi-youtube"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <label class="font-weight-bold">Mevcut Görsel Önizleme</label>
+                        <div class="preview-box p-2 border rounded bg-light" style="min-height: 150px; text-align: center;">
+                            <img src="@Model.ImageUrl" id="previewImage" class="shadow-sm" style="max-height: 250px; width: 100%; object-fit: cover; border-radius: 8px;" alt="Önizleme" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 d-flex justify-content-start">
+                    <button type="submit" class="btn btn-warning btn-icon-text mr-2">
+                        <i class="mdi mdi-file-check btn-icon-prepend"></i> Değişiklikleri Kaydet
+                    </button>
+                    <a href="/StoryVideo/StoryVideoList" class="btn btn-dark btn-icon-text">
+                        <i class="mdi mdi-reload btn-icon-prepend"></i> Vazgeç
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@* Canlı Önizleme Scripti *@
+@@section Scripts {
+    <script>
+        const imageInput = document.getElementById('imageUrlInput');
+        const previewImg = document.getElementById('previewImage');
+
+        imageInput.addEventListener('input', function () {
+            const url = this.value;
+            if (url) {
+                previewImg.src = url;
+            } else {
+                previewImg.src = "/images/no-image.png"; // İsteğe bağlı default resim
+            }
+        });
+    </script>
+}

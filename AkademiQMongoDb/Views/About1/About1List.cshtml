@@ -1,0 +1,174 @@
+﻿@model AkademiQMongoDb.Dtos.AboutSection1.ResultAbout1Dto
+@{
+    ViewData["Title"] = "Hakkımızda Yönetimi";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<style>
+    /* Modern Kart Tasarımı */
+    .about-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+
+    /* Görsel Alanı */
+    .about-img-container {
+        position: relative;
+        width: 100%;
+        height: 250px;
+        overflow: hidden;
+        border-radius: 12px;
+    }
+
+        .about-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+    .about-card:hover .about-img-container img {
+        transform: scale(1.05);
+    }
+
+    /* İçerik Alanı */
+    .content-badge {
+        background: rgba(75, 73, 172, 0.1);
+        color: #4B49AC;
+        font-weight: 700;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        padding: 5px 12px;
+        border-radius: 50px;
+        display: inline-block;
+    }
+
+    .about-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #343a40;
+        margin-top: 15px;
+    }
+
+    .about-desc {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #6c757d;
+        margin-bottom: 20px;
+    }
+
+    /* Buton Grubu */
+    .action-buttons .btn {
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+    }
+
+    .btn-edit {
+        background-color: #f3f5ff;
+        color: #4B49AC;
+        border: 1px solid #4B49AC;
+    }
+
+        .btn-edit:hover {
+            background-color: #4B49AC;
+            color: white;
+        }
+
+    .btn-delete {
+        background-color: #fff5f5;
+        color: #ff4747;
+        border: 1px solid #ff4747;
+    }
+
+        .btn-delete:hover {
+            background-color: #ff4747;
+            color: white;
+        }
+
+    /* Boş Durum Tasarımı */
+    .empty-state {
+        text-align: center;
+        padding: 50px 20px;
+        background: #f8f9fa;
+        border-radius: 15px;
+        border: 2px dashed #dee2e6;
+    }
+</style>
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="font-weight-bold">Hakkımızda (Bölüm 1)</h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0" style="background:none;">
+                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Hakkımızda</li>
+                </ol>
+            </nav>
+        </div>
+
+        @if (Model == null || string.IsNullOrEmpty(Model.AboutSection1Id))
+        {
+            <div class="empty-state">
+                <div class="mb-3">
+                    <i class="mdi mdi-text-box-plus-outline text-muted" style="font-size: 4rem;"></i>
+                </div>
+                <h4>İçerik Bulunamadı</h4>
+                <p class="text-muted">Henüz bu bölüm için bir veri girişi yapmadınız.</p>
+                <a href="/About1/CreateAbout1" class="btn btn-primary btn-rounded shadow-sm">
+                    <i class="mdi mdi-plus mr-2"></i>Yeni İçerik Oluştur
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="card about-card shadow-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <!-- Sol: Görsel -->
+                        <div class="col-md-5">
+                            <div class="about-img-container shadow-sm">
+                                <img src="@Model.ImageUrl" alt="About Image" onerror="this.src='/images/placeholder.jpg'">
+                            </div>
+                        </div>
+
+                        <!-- Sağ: İçerik -->
+                        <div class="col-md-7">
+                            <div class="p-3">
+                                <span class="content-badge">Bölüm 1 İçeriği</span>
+                                <h2 class="about-title">@Model.Title</h2>
+                                <hr class="my-3" style="width: 50px; border-top: 3px solid #4B49AC; margin-left: 0;">
+                                <p class="about-desc">@Model.Description</p>
+
+                                <div class="action-buttons mt-4 d-flex gap-2">
+                                    <a href="/About1/UpdateAbout1/@Model.AboutSection1Id" class="btn btn-edit">
+                                        <i class="mdi mdi-pencil-outline"></i> Düzenle
+                                    </a>
+                                    <button onclick="deleteConfirm('@Model.AboutSection1Id')" class="btn btn-delete ml-2">
+                                        <i class="mdi mdi-trash-can-outline"></i> Kaldır
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    function deleteConfirm(id) {
+        // Buraya SweetAlert2 gibi bir kütüphane eklemen harika olur!
+        if (confirm("Bu içeriği silmek istediğinize emin misiniz?")) {
+            window.location.href = "/About1/DeleteAbout1/" + id;
+        }
+    }
+</script>

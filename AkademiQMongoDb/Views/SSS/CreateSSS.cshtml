@@ -1,0 +1,54 @@
+﻿@model AkademiQMongoDb.Dtos.SSSDto.CreateSSSDto
+@{
+    ViewData["Title"] = "Yeni Öne Çıkan İçerik";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <div class="d-flex align-items-center mb-4">
+                <i class="mdi mdi-star-circle text-primary h3 mr-2"></i>
+                <h4 class="card-title mb-0">SSS İçeriği Oluştur</h4>
+            </div>
+
+            <p class="card-description text-muted">
+                Bu alana ekleyeceğiniz bilgiler, web sitenizin en üst kısmında (Hero Section) görünecektir.
+                Etkileyici bir başlık ve yüksek çözünürlüklü bir görsel kullanmanızı öneririz.
+            </p>
+            <hr />
+
+            <form method="post" class="forms-sample mt-4">
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label class="font-weight-bold">Sık Sorulan Soru</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-primary text-white"><i class="mdi mdi-format-title"></i></span>
+                            </div>
+                            <input type="text" class="form-control" asp-for="Title" placeholder="Örn: En Lezzetli Burgerler Burada!" required>
+                        </div>
+                        <small class="text-muted">Kısa ve vurucu bir başlık seçin.</small>
+                    </div>
+
+                    <div class="form-group col-12">
+                        <label class="font-weight-bold">Açıklama</label>
+                        <textarea class="form-control" asp-for="Description" rows="4" placeholder="Ürünleriniz veya kampanyanız hakkında kısa bir bilgi yazın..."></textarea>
+                    </div>
+                </div>
+
+                
+
+                <div class="mt-4 border-top pt-3">
+                    <button type="submit" class="btn btn-primary btn-icon-text mr-2 shadow-sm">
+                        <i class="mdi mdi-content-save btn-icon-prepend"></i> İçeriği Yayınla
+                    </button>
+                    <a href="/SSS/SSSList" class="btn btn-light btn-icon-text border">
+                        <i class="mdi mdi-arrow-left btn-icon-prepend"></i> Listeye Dön
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

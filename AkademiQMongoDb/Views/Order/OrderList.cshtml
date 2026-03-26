@@ -1,0 +1,125 @@
+﻿@model List<AkademiQMongoDb.Dtos.OrderDto.ResultOrderDto>
+@{
+    ViewData["Title"] = "Sipariş Yönetimi";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<!-- SweetAlert Kütüphanesini Doğrudan Çağırıyoruz (Section Gerektirmez) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+    .table td, .table th {
+        vertical-align: middle; /* Yazıları dikeyde ortalar */
+        padding: 10px 15px; /* Hücre boşluklarını daraltır */
+    }
+
+    .btn-icon i {
+        font-size: 1.2rem; /* İkon boyutunu dengeler */
+    }
+</style>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="card-title mb-0">Gelen Siparişler</h4>
+                <span class="badge badge-outline-primary">Toplam: @Model.Count Sipariş</span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover mt-3">
+                    <thead class="bg-light text-muted">
+                        <tr>
+                            <th>Müşteri</th>
+                            <th>Ürün</th>
+                            <th>Fiyat</th>
+                            <th>Tarih</th>
+                            <th class="text-center">Durum</th>
+                            <th class="text-center" style="width: 250px;"> İşlemler </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <span class="font-weight-bold text-dark">@item.CustomerName</span>
+                                        <small class="text-muted">@item.Address</small>
+                                    </div>
+                                </td>
+                                <td><span class="badge badge-outline-dark">@item.ProductName</span></td>
+                                <td class="font-weight-bold text-primary">@item.Price.ToString("C2")</td>
+                                <td>
+                                    <div class="small">
+                                        <i class="mdi mdi-calendar"></i> @item.OrderDate.ToString("dd.MM.yyyy") <br />
+                                        <i class="mdi mdi-clock-outline"></i> @item.OrderDate.ToString("HH:mm")
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    @if (item.IsCompleted)
+                                    {
+                                        <span class="badge badge-success px-3 py-2">
+                                            <i class="mdi mdi-check-all"></i> Teslim Edildi
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-warning px-3 py-2 text-dark">
+                                            <i class="mdi mdi-timer-sand"></i> Bekliyor
+                                        </span>
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center align-items-center" style="gap: 8px; white-space: nowrap;">
+
+                                        @if (!item.IsCompleted)
+                                        {
+                                            <a href="/Order/CompleteOrder/@item.OrderId"
+                                               class="btn btn-inverse-success btn-sm d-flex align-items-center px-3 shadow-sm"
+                                               style="border-radius: 8px; font-weight: 600;">
+                                                <i class="mdi mdi-check-circle-outline mr-1"></i> Onayla
+                                            </a>
+                                        }
+
+                                        <a href="/Order/UpdateOrder/@item.OrderId"
+                                           class="btn btn-inverse-info btn-sm d-flex align-items-center px-3 shadow-sm"
+                                           style="border-radius: 8px; font-weight: 600;">
+                                            <i class="mdi mdi-pencil-outline mr-1"></i> Güncelle
+                                        </a>
+
+                                        <button type="button" onclick="confirmDelete('@item.OrderId')"
+                                                class="btn btn-inverse-danger btn-sm d-flex align-items-center px-3 shadow-sm"
+                                                style="border-radius: 8px; font-weight: 600;">
+                                            <i class="mdi mdi-delete-outline mr-1"></i> Sil
+                                        </button>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* JS Fonksiyonu Doğrudan Sayfa İçinde *@
+<script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Emin misiniz?',
+            text: "Bu sipariş veritabanından kalıcı olarak silinecek!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Evet, Sil!',
+            cancelButtonText: 'İptal',
+            borderRadius: '15px'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/Order/DeleteOrder?id=" + id;
+            }
+        })
+    }
+</script>

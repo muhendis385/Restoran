@@ -1,0 +1,107 @@
+﻿<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+        <!-- Dashboard -->
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
+                <i class="typcn typcn-device-desktop menu-icon"></i>
+                <span class="menu-title">İstatistikler</span>
+            </a>
+        </li>
+
+
+        <!-- Hakkımızda Bölümleri -->
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("About1List", "About1")">
+                <i class="typcn typcn-document-text menu-icon"></i>
+                <span class="menu-title">Hakkımızda - Bölüm 1</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("About2List", "About2")">
+                <i class="typcn typcn-briefcase menu-icon"></i>
+                <span class="menu-title">Hakkımızda - Bölüm 2</span>
+            </a>
+        </li>
+
+        <!-- Öne Çıkanlar -->
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("FeatureList", "Feature")">
+                <i class="typcn typcn-star-outline menu-icon"></i>
+                <span class="menu-title">Öne Çıkanlar</span>
+            </a>
+        </li>
+
+
+        <!-- Ürünler -->
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("ProductList", "Product")">
+                <i class="typcn typcn-shopping-bag menu-icon"></i>
+                <span class="menu-title">Ürünlerimiz</span>
+            </a>
+        </li>
+
+        <!-- Referanslar -->
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("TestimonialList", "Testimonial")">
+                <i class="typcn typcn-messages menu-icon"></i>
+                <span class="menu-title">Müşteri Yorumları</span>
+            </a>
+        </li>
+
+        <!-- SSS -->
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("SSSList", "SSS")">
+                <i class="typcn typcn-info-large-outline menu-icon"></i>
+                <span class="menu-title">S.S.S.</span>
+            </a>
+        </li>
+
+
+        <!-- Siparişler -->
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("OrderList", "Order")">
+                <i class="typcn typcn-clipboard menu-icon"></i>
+                <span class="menu-title">Siparişler</span>
+                <div class="badge badge-info">Aktif</div>
+            </a>
+        </li>
+
+        <!-- Abonelikler -->
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("SubscriberList", "Subscriber")">
+                <i class="typcn typcn-mail menu-icon"></i>
+                <span class="menu-title">Bülten Aboneleri</span>
+            </a>
+        </li>
+
+
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("Index", "Default")" target="_blank">
+                <i class="typcn typcn-arrow-forward-outline menu-icon"></i>
+                <span class="menu-title">Siteye Git</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<style>
+    /* Menü başlıkları (Kategoriler) için küçük bir stil */
+    .nav-category {
+        padding: 20px 0 10px 25px;
+        text-transform: uppercase;
+        font-size: 11px;
+        font-weight: 700;
+        color: #adb5bd;
+        letter-spacing: 1px;
+    }
+
+    /* Aktif menü öğesi için yumuşak bir geçiş */
+    .sidebar .nav .nav-item:hover .nav-link {
+        background: rgba(75, 73, 172, 0.05);
+        color: #4B49AC;
+    }
+
+    .sidebar .nav .nav-item .nav-link i.menu-icon {
+        font-size: 1.1rem;
+    }
+</style>

@@ -1,0 +1,194 @@
+﻿@model AkademiQMongoDb.Dtos.ProductDto.GetProductByIdDto
+@{
+    ViewData["Title"] = "Ürün Güncelle";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<style>
+    /* Modern Kart Tasarımı */
+    .update-card {
+        border: none;
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important;
+    }
+
+    /* Görsel Önizleme Alanı */
+    .image-preview-wrapper {
+        position: relative;
+        width: 100%;
+        height: 250px;
+        background: #f8f9fa;
+        border: 2px dashed #dee2e6;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        transition: all 0.3s;
+    }
+
+        .image-preview-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s;
+        }
+
+        .image-preview-wrapper:hover img {
+            transform: scale(1.05);
+        }
+
+    /* Input Odak Efektleri */
+    .form-control {
+        border-radius: 10px;
+        padding: 12px 15px;
+        border: 1.5px solid #f1f1f1;
+        transition: all 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: #ffc107;
+            box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.1);
+            background-color: #fff;
+        }
+
+    /* Badge & Etiketler */
+    .section-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 20px;
+        border-left: 4px solid #ffc107;
+        padding-left: 15px;
+    }
+
+    /* Fiyat Alanları İçin Renk Dokunuşları */
+    .price-input-group .input-group-text {
+        border-radius: 10px 0 0 10px;
+        border: none;
+        font-weight: bold;
+    }
+
+    .btn-modern {
+        border-radius: 12px;
+        padding: 12px 25px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card update-card">
+            <div class="card-body p-4 p-md-5">
+                <!-- Başlık Alanı -->
+                <div class="d-flex justify-content-between align-items-center mb-5">
+                    <div>
+                        <h3 class="font-weight-bold mb-1 text-dark">Ürünü Düzenle</h3>
+                        <p class="text-muted small mb-0">Ürün bilgilerini ve fiyatlandırmayı buradan güncelleyebilirsiniz.</p>
+                    </div>
+                    <div class="d-none d-md-block">
+                        <span class="badge badge-outline-warning p-2">Sistem ID: @Model.ProductId</span>
+                    </div>
+                </div>
+
+                <form method="post" class="forms-sample">
+                    @* Hidden fields for ID *@
+                    <input type="hidden" asp-for="ProductId" />
+
+                    <div class="row">
+                        <!-- Sol Kolon: Ürün Bilgileri -->
+                        <div class="col-md-8">
+                            <h5 class="section-title">Genel Bilgiler</h5>
+
+                            <div class="form-group mb-4">
+                                <label class="font-weight-bold">Ürün Adı</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-white border-right-0"><i class="mdi mdi-food-variant text-warning"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control border-left-0" asp-for="ProductName" placeholder="Örn: Karışık Pizza">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6 mb-4">
+                                    <label class="font-weight-bold">Hazırlanma Süresi</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" asp-for="TotalTime">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text bg-light border-0 small">Dakika</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 mb-4">
+                                    <label class="font-weight-bold">Görsel URL</label>
+                                    <input type="text" id="imageUrlInput" class="form-control" asp-for="ImageUrl" placeholder="https://...">
+                                </div>
+                            </div>
+
+                            <h5 class="section-title mt-4">Fiyatlandırma</h5>
+                            <div class="row">
+                                <div class="form-group col-md-6 mb-4">
+                                    <label class="font-weight-bold text-success">Satış Fiyatı</label>
+                                    <div class="input-group price-input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-success text-white">₺</span>
+                                        </div>
+                                        <input type="text" class="form-control font-weight-bold text-success" asp-for="Price">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 mb-4">
+                                    <label class="font-weight-bold text-muted">Eski Fiyat (İndirimli Görünüm)</label>
+                                    <div class="input-group price-input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-light text-muted">₺</span>
+                                        </div>
+                                        <input type="text" class="form-control text-muted" asp-for="OldPrice">
+                                    </div>
+                                    <small class="text-muted">Boş bırakılırsa indirim görünmez.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sağ Kolon: Görsel Önizleme -->
+                        <div class="col-md-4">
+                            <h5 class="section-title">Görsel Önizleme</h5>
+                            <div class="image-preview-wrapper shadow-sm mb-3">
+                                <img src="@Model.ImageUrl" id="imgPreview" alt="Ürün Önizleme" onerror="this.src='/admintemplate/images/no-image.png'" />
+                            </div>
+                            <div class="alert alert-warning border-0 small py-2" style="border-radius:10px;">
+                                <i class="mdi mdi-information-outline mr-1"></i> URL değiştikçe önizleme otomatik güncellenir.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Butonlar -->
+                    <div class="mt-5 pt-4 border-top d-flex justify-content-end">
+                        <a href="/Product/ProductList" class="btn btn-light btn-modern mr-3">
+                            <i class="mdi mdi-arrow-left mr-1"></i> Vazgeç
+                        </a>
+                        <button type="submit" class="btn btn-warning btn-modern px-5 text-dark shadow-sm">
+                            <i class="mdi mdi-content-save-check mr-1"></i> Güncellemeleri Uygula
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Canlı Önizleme Scripti
+    const urlInput = document.getElementById('imageUrlInput');
+    const imgPreview = document.getElementById('imgPreview');
+
+    urlInput.addEventListener('input', function() {
+        if(this.value.trim() !== "") {
+            imgPreview.src = this.value;
+        } else {
+            imgPreview.src = '/admintemplate/images/no-image.png';
+        }
+    });
+</script>

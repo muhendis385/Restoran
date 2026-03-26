@@ -1,0 +1,40 @@
+﻿@model AkademiQMongoDb.Dtos.AboutSection2.CreateAbout2Dto
+@{
+    ViewData["Title"] = "Yeni İçerik";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <h4 class="card-title text-primary">Yeni Madde Ekle</h4>
+            <form class="forms-sample" method="post">
+                
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Madde 1</label>
+                            <input type="text" asp-for="Item1" class="form-control" placeholder="Örn: El yapımı üretim">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Madde 2</label>
+                            <input type="text" asp-for="Item2" class="form-control" placeholder="Örn: Taze malzemeler">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Madde 3</label>
+                            <input type="text" asp-for="Item3" class="form-control" placeholder="Örn: Hızlı servis">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary mr-2">Kaydet</button>
+                <a href="/About2/Index" class="btn btn-light">İptal</a>
+            </form>
+        </div>
+    </div>
+</div>
